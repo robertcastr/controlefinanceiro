@@ -185,7 +185,6 @@ public partial class Tela
         var lista = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown, WrapContents = false, AutoScroll = true, BackColor = Fundo };
         raiz.Controls.Add(lista, 0, 2);
         var pagamentos = new List<(DateTimePicker mes, NumericUpDown valor, Panel linha)>();
-        void AtualizarTotal() => total.Text = "Total previsto: " + pagamentos.Sum(x => x.valor.Value).ToString("C", br);
         void AdicionarMes(DateTime data, decimal quantia)
         {
             var linha = new Panel { Width = Math.Max(465, lista.ClientSize.Width - 25), Height = 45, Margin = new Padding(0, 0, 0, 5) };
@@ -216,6 +215,7 @@ public partial class Tela
         rodape.Controls.Add(adicionar, 0, 0); rodape.Controls.Add(total, 1, 0);
         rodape.Controls.Add(aviso, 0, 1); rodape.Controls.Add(salvar, 1, 1);
         raiz.Controls.Add(rodape, 0, 3);
+        void AtualizarTotal() => total.Text = "Total previsto: " + pagamentos.Sum(x => x.valor.Value).ToString("C", br);
         AdicionarMes(DateTime.Today, 1);
         adicionar.Click += (_, _) => {
             var ultima = pagamentos.Max(x => new DateTime(x.mes.Value.Year, x.mes.Value.Month, 1));
